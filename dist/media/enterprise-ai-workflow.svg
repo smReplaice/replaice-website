@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 470" fill="none">
+<defs>
+ <linearGradient id="panel" x2="1" y2="1"><stop stop-color="#193b61"/><stop offset="1" stop-color="#09172d"/></linearGradient>
+ <radialGradient id="light"><stop stop-color="#185489"/><stop offset="1" stop-color="#0b182f"/></radialGradient>
+ <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" stroke="#376285" stroke-opacity=".35"/></pattern>
+ <filter id="glow"><feGaussianBlur stdDeviation="4"/></filter>
+</defs>
+<rect width="560" height="470" rx="23" fill="url(#light)"/>
+<rect width="560" height="470" rx="23" fill="url(#grid)"/>
+<g stroke="#6adcf0" stroke-width="1.4">
+ <path d="M112 119v22q0 16 16 16h136q16 0 16 16v13M280 119v67M448 119v22q0 16-16 16H296q-16 0-16 16v13M280 285v24m0 49v25" opacity=".65"/>
+ <path d="M112 119v22q0 16 16 16h136q16 0 16 16v13M280 285v24m0 49v25" stroke-dasharray="4 9"/>
+</g>
+<g fill="url(#panel)" stroke="#4f799e">
+ <rect x="40" y="67" width="144" height="52" rx="10"/><rect x="208" y="67" width="144" height="52" rx="10"/><rect x="376" y="67" width="144" height="52" rx="10"/>
+ <rect x="151" y="186" width="258" height="99" rx="15" stroke="#77e8ee"/>
+ <rect x="174" y="309" width="212" height="49" rx="10"/><rect x="174" y="383" width="212" height="48" rx="10"/>
+</g>
+<g fill="#7afff1"><circle cx="220" cy="157" r="9" opacity=".55" filter="url(#glow)"/><circle cx="220" cy="157" r="3"/><circle cx="371" cy="157" r="3"/><circle cx="280" cy="297" r="3"/><circle cx="280" cy="370" r="3"/></g>
+<path d="m183 223 14-8 14 8v16l-14 8-14-8zm0 0 14 8 14-8m-14 8v16" stroke="#81fff0" stroke-width="1.8" stroke-linejoin="round"/>
+<g font-family="system-ui,sans-serif" fill="#eaf6ff" text-anchor="middle">
+ <text x="280" y="38" fill="#9ad8ef" font-size="13" letter-spacing="2.6">ENTERPRISE AI WORKFLOW</text>
+ <text x="112" y="99" font-size="16">Applications</text><text x="280" y="99" font-size="16">Documents</text><text x="448" y="99" font-size="16">Data sources</text>
+ <text x="303" y="228" font-size="21" font-weight="650">Replaice AI agents</text><text x="303" y="251" font-size="14" fill="#acd2ea">Retrieve · plan · act</text>
+ <text x="280" y="339" font-size="17">Human approval</text><text x="280" y="413" font-size="17">Auditable action</text>
+</g>
+</svg>

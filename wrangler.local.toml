@@ -1,0 +1,7 @@
+name = "replaice-local"
+main = "dist/server/index.js"
+compatibility_date = "2026-11-13"
+
+[build]
+command = "npm run build:assistant && node scripts/build-worker.mjs"
+watch_dir = ["src", "worker", "dist", "scripts/build-worker.mjs"]

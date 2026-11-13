@@ -1,0 +1,12 @@
+
+dist/server/
+
+node_modules/
+
+.env
+.env.local
+.dev.vars
+.env.*
+!.env.example
+.dev.vars.*
+.wrangler/

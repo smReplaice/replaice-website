@@ -1,0 +1,2 @@
+/*! tailwindcss v4.3.5 | MIT License | https://tailwindcss.com */
+@layer theme{:root,:host{--care-color-teal-200:oklch(91% .096 180.426);--care-spacing:.25rem;--care-text-sm:.875rem;--care-text-sm--line-height:calc(1.25 / .875)}}@layer utilities{.care\:mt-3{margin-top:calc(var(--care-spacing) * 3)}.care\:ml-2{margin-left:calc(var(--care-spacing) * 2)}.care\:text-sm{font-size:var(--care-text-sm);line-height:var(--tw-leading,var(--care-text-sm--line-height))}.care\:text-teal-200{color:var(--care-color-teal-200)}}
