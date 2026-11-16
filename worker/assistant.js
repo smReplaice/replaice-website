@@ -7,14 +7,14 @@ async function assistantSession(request,env){
  if(request.method!=='POST')return reply({},405);
  if(request.headers.get('Origin')!==new URL(request.url).origin)return reply({},403);
  if(!env.ELEVENLABS_API_KEY||!env.SIMLI_API_KEY)return reply({message:'Voice assistant setup is pending. Please contact our team.'},503);
- if(/(?:^|;\s*)replaice_raj_used=1(?:;|$)/.test(request.headers.get('Cookie')||''))return reply({sessionUsed:true,message:'Your Ask Raj session has ended.'},409);
- const ip=request.headers.get('CF-Connecting-IP')||'local';
+ const ip=request.headers.get('CF-Connecting-IP');
+ const bucket=ip||'unidentified';
  const now=Date.now();
  for(const [key,value] of assistantLimits)if(value.expires<=now)assistantLimits.delete(key);
- const limit=assistantLimits.get(ip)||{count:0,expires:now+600000};
- if(limit.count>=5||assistantLimits.size>=5000)return reply({message:'Please try again in a few minutes.'},429);
+ const limit=assistantLimits.get(bucket)||{count:0,expires:now+600000};
+ if(limit.count>=(ip?5:60)||assistantLimits.size>=5000)return reply({message:'Please try again in a few minutes.'},429);
  limit.count++;
- assistantLimits.set(ip,limit);
+ assistantLimits.set(bucket,limit);
  try{
   const agent=encodeURIComponent(env.ELEVENLABS_AGENT_ID||assistantAgentId);
   const [voice,avatar]=await Promise.all([
@@ -27,7 +27,6 @@ async function assistantSession(request,env){
   }
   const [{signed_url},{session_token}]=await Promise.all([voice.json(),avatar.json()]);
   if(!signed_url||!session_token)throw new Error();
-  const secure=new URL(request.url).protocol==='https:'?'; Secure':'';
-  return reply({signedUrl:signed_url,avatarToken:session_token},200,{'Set-Cookie':'replaice_raj_used=1; Path=/api/assistant/session; HttpOnly; SameSite=Strict'+secure});
+  return reply({signedUrl:signed_url,avatarToken:session_token},200,{'Set-Cookie':'replaice_raj_used=; Max-Age=0; Path=/api/assistant/session; HttpOnly; SameSite=Strict'+(new URL(request.url).protocol==='https:'?'; Secure':'')});
  }catch{return reply({message:'The voice assistant is temporarily unavailable.'},502);}
 }

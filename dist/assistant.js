@@ -14,7 +14,7 @@ widget.innerHTML=`<div class="assistant-nudge" hidden><span data-hint></span><bu
 document.body.append(widget);
 const panel=widget.querySelector('section'),launch=widget.querySelector('.assistant-launch'),nudge=widget.querySelector('.assistant-nudge'),start=widget.querySelector('[data-start]'),status=widget.querySelector('[data-status]');
 let active,revision=0;
-const usageKey='replaice-raj-used';
+const usageKey='replaice-raj-tab-used-v2';
 const followup=widget.querySelector('.assistant-book');
 let used=false;
 try{used=sessionStorage.getItem(usageKey)==='1';}catch{}

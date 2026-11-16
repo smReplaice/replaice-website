@@ -95,7 +95,7 @@ if(!cookiesAccepted&&!cookieNoticeDismissed){
  document.body.append(notice);
 }
 mountConstructionCarousel();
-mountEditorialStack(main);
+if(!page)mountEditorialStack(main);
 mountHeroCity();
 mountHeroArchitecture();
 if(page==='contact'){
