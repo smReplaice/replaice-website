@@ -1,7 +1,10 @@
+import { mountEditorialStack } from "./editorial-stack.js";
+import {editionHome, editionProduct, mountEdition} from "./edition.js";
+import {editorialHome, productHref} from "./editorial.js";
 import {northstarMotion} from "./northstar-motion.js";
 import {carePath,careDemo,mountCare,renderCarePage} from './replaicecare.js';
 import {renderBiltFlowDemo} from "./biltflow-demo.js";
-import {solutionHeadline,renderSolutionVisual} from "./solution-visuals.js";
+import {solutionHeadline,renderSolutionVisual,mountConstructionCarousel} from "./solution-visuals.js";
 import {renderSolutionValue,renderConstructionCase} from "./solution-value.js";
 import {renderConstructionLifecycle} from "./construction-lifecycle.js";
 import {legalPages} from "./legal.js";
@@ -30,30 +33,26 @@ const hybridFlow=()=>`<div class="hybrid-flow" data-hybrid-flow>
       <img src="/media/hybrid-etl.png" width="670" height="312" loading="lazy" decoding="async" data-loop="/media/hybrid-etl.gif" alt="Images, documents, and data sources flow into the ETL pipeline and emerge as a structured dataset."></figure>
     <figure><figcaption><h4>High-precision hybrid search</h4><p>Combine vector search, BM25 full-text search, and tensor retrieval. Apply custom scoring and reranking to select the most relevant context for the answer.</p></figcaption>
       <img src="/media/hybrid-search.png" width="670" height="312" loading="lazy" decoding="async" data-loop="/media/hybrid-search.gif" alt="A query branches into vector, full-text, and tensor retrieval. Results merge at the reranker and flow to the answer."></figure>
-  </div><button class="hybrid-play" type="button">Pause animation</button>
+  </div>
 </div>`;
 const platformCard=p=>`<article class="product" id="${productId(p)}"><div class="product-copy"><div class="mono">${p[1]}</div><h3>${p[0]}</h3><p><strong>${p[2]}</strong></p><p>${p[3]}</p><ul>${p[4].map(x=>`<li>${x}</li>`).join('')}</ul><a class="link" href="${p[5]}"${p[5].startsWith('https://')?' target="_blank" rel="noopener noreferrer"':''}>Explore ${p[0]} ↗</a></div>${p[0]==='ReplaiceCare'?careDemo():p[0]==='BiltFlow'?renderBiltFlowDemo():p[0]==='HybridRAG Agent'?hybridFlow():demo(p)}${p[0]==='NorthStar'?northstarMotion():''}</article>`;
-const contact=()=>`<section class="section"><div class="wrap"><div class="eyebrow">Contact Replaice</div><h1>Talk to our <em>AI team.</em></h1><div class="contact-grid" style="margin-top:28px"><div><p>Tell us about your enterprise workflows and where you want to put AI to work.</p><div class="offices"><article><h3>India</h3><p>Replaice Technologies Pvt Ltd<br>Bizzhub, 6th Floor, No. 144<br>MSR North Tower, Outer Ring Road<br>Nagavara, Hebbal, Bengaluru, Karnataka 560045<br>India</p></article><article><h3>Singapore Head Office</h3><p>Huntglobal Pte Ltd<br>Level 8, 2 Venture Drive<br>Singapore 608526</p></article></div></div><form id="enquiry"><p>We’ll email a confirmation to your business address. We include your approximate city, region, and country, inferred from your IP address when available, in the internal enquiry. See our <a href="/privacy/" class="link">Privacy Policy</a>.</p><label>Name<input name="Name" autocomplete="name" required></label><label>Business email<input name="Business email" type="email" autocomplete="email" required></label><label>Company<input name="Company" autocomplete="organization" required></label><label>Country<input name="Country" autocomplete="country-name" required></label><label>Product interest<select name="Product interest" required><option value="">Select a platform or service</option>${[...products.map(p=>p[0]),'Enterprise AI Transformation','Other'].map(x=>`<option>${x}</option>`).join('')}</select></label><label>Business challenge<input name="Business challenge" required></label><label>Message<textarea name="Message" required></textarea></label><div hidden><label>Website<input name="Website" tabindex="-1" autocomplete="off"></label></div><button class="button" type="submit">Send enquiry</button><p role="status" id="form-status"></p></form></div></div></section>`;
+const contact=()=>`<section class="section"><div class="wrap"><div class="eyebrow">Contact Replaice</div><h1>Talk to our <em>AI team.</em></h1><div class="contact-grid" style="margin-top:28px"><div><p>Tell us about your enterprise workflows and where you want to put AI to work.</p><div class="offices"><article class="contact-office"><div><h3>India</h3><p>Replaice Technologies Pvt Ltd<br>Bizzhub, 6th Floor, No. 144<br>MSR North Tower, near Manayata Tech Park, Outer Ring Road<br>Nagavara, Hebbal, Bengaluru, Karnataka 560045<br>India</p></div><img src="/media/replaice-bengaluru-office.webp" alt="Replaice office building in Bengaluru" loading="lazy" decoding="async"></article><article class="contact-office"><div><h3>Singapore Head Office</h3><p>Huntglobal Pte Ltd<br>Level 8, 2 Venture Drive<br>Singapore 608526</p></div><img src="/media/replaice-singapore-office.webp" alt="Replaice head office building in Singapore" loading="lazy" decoding="async"></article></div><p id="careers" style="margin-top:24px"><strong>Interested in joining Replaice?</strong> Email your CV and a short introduction to <a class="link" href="mailto:career@replaice.co">career@replaice.co</a>.</p></div><form id="enquiry"><p>We’ll email a confirmation to your business address. We include your approximate city, region, and country, inferred from your IP address when available, in the internal enquiry. See our <a href="/privacy/" class="link">Privacy Policy</a>.</p><label>Name<input name="Name" autocomplete="name" required></label><label>Business email<input name="Business email" type="email" autocomplete="email" required></label><label>Company<input name="Company" autocomplete="organization" required></label><label>Country<input name="Country" autocomplete="country-name" required></label><label>Product interest<select name="Product interest" required><option value="">Select a platform or service</option>${[...products.map(p=>p[0]),'Enterprise AI Transformation','Other'].map(x=>`<option>${x}</option>`).join('')}</select></label><label>Business challenge<input name="Business challenge" required></label><label>Message<textarea name="Message" required></textarea></label><div hidden><label>Website<input name="Website" tabindex="-1" autocomplete="off"></label></div><button class="button" type="submit">Send enquiry</button><p role="status" id="form-status"></p></form></div></div></section>`;
 const closing=()=>`<section class="closing dark"><div class="wrap"><h2>Your enterprise is ready for <em>intelligent action.</em></h2><p>Build connected operations with specialized agentic platforms, trusted enterprise intelligence and physical AI.</p><div class="actions">${link('/contact/','Talk to Our AI Team')}${link('/#platforms','Explore Our Platforms','outline')}</div></div></section>`;
 const benchmarkMetrics=[
  [String(products.length),'Specialized AI platforms'],
  ['40+','Distinct language models'],
  ['110 hours','Saved per user per year'],
+ ['93%','Enterprise adoption in under two years'],
  ['275+','Work app and data source connections'],
  ['3+ billion','Cumulative searches across documents and knowledge objects'],
  ['99.9%+','Uptime across core search and AI services']
 ];
 const renderBenchmarkStrip=()=>`<section class="benchmark-strip" aria-labelledby="benchmark-title"><div class="wrap"><h2 id="benchmark-title">Illustrative enterprise AI benchmarks</h2><dl>${benchmarkMetrics.map(([value,label])=>`<div><dt>${label}</dt><dd>${value}</dd></div>`).join('')}</dl></div></section>`;
-const home=()=>`
-<section class="hero city-hero">${renderHeroCity()}<div class="wrap city-copy"><div class="eyebrow">Enterprise Agentic AI + Physical AI</div><h1>From Enterprise Complexity to <em>Intelligent Action.</em></h1><p class="sub">Powered by Agentic AI &amp; Physical AI.</p><p>Replaice transforms enterprise expertise, data, and operational complexity into intelligent action. Our specialized AI platforms combine enterprise knowledge, autonomous agents, and physical intelligence to help organizations adopt AI, orchestrate mission-critical workflows, and accelerate business transformation.</p><div class="actions">${link('#platforms','Explore Our Platforms')}${link('/contact/','Talk to Our AI Team','outline')}</div></div></section>${renderBenchmarkStrip()}<div class="wrap city-architecture">${renderHeroArchitecture()}</div>
-
-<section class="section wrap" id="solutions">${headline('What we do','Enterprise intelligence.<br><em>Built around your business.</em>','Replaice combines enterprise technology expertise with purpose-built AI platforms to help organizations move from experimentation to intelligent, autonomous operations.')}<div class="pillars">${pillars.map((p,i)=>`<article class="pillar" id="${p[0]}"><div class="art"><svg viewBox="0 0 285 130" aria-hidden="true" fill="none" stroke="#80ddf4" stroke-width="1.5">${illustrations[i]}</svg></div><div class="pillar-copy"><div class="mono">${p[1]}</div><h3>${p[2]}</h3><p>${p[3]}</p><ul>${p[4].map(s=>`<li>${s}</li>`).join('')}</ul><a class="link" href="${p[5]}">${p[6]} ↗</a></div></article>`).join('')}</div></section>
-<section class="section dark" id="platforms"><div class="wrap">${headline('The Replaice product ecosystem','Purpose-built AI.<br><em>Enterprise-wide impact.</em>','Seven specialized AI platforms for construction, robotics, compliance, enterprise knowledge, customer support, engagement and healthcare.')}<div class="products">${products.map(platformCard).join('')}</div></div></section>
-${renderSecurity()}
-${marketingMetrics.some(m=>m.verified)?`<section class="section wrap"><h2>Operational outcomes</h2>${marketingMetrics.filter(m=>m.verified).map(m=>`<p>${m.value} ${m.label}</p>`).join('')}</section>`:''}<section class="section wrap" id="enterprise-ai-solutions">${headline('Solutions','Find the right enterprise AI solution.')}<div class="compare">${solutions.map(item=>`<article><h3><a href="/solutions/${item.slug}/">${item.title}</a></h3><p>${item.summary}</p><a class="link" href="/solutions/${item.slug}/">Explore solution ↗</a></article>`).join('')}</div></section>${closing()}`;
+const home=()=>editionHome(renderSecurity);
 export function renderPage(path){
  if(path.replace(/\/$/,'')===carePath)return renderCarePage();
  const [,page,slug]=path.split('/');
+ if(page==='platforms'){const product=editionProduct(slug);if(product)return product;}
  const legal=legalPages[path.endsWith('/')?path:path+'/'];
  if(legal)return `<section class="section wrap legal-page"><h1>${legal.title}</h1><p>${legal.summary}</p>${legal.sections.map(([title,body])=>`<section><h2>${title}</h2><p>${body}</p></section>`).join('')}</section>`;
  if(page==='contact')return contact();
@@ -63,7 +62,7 @@ export function renderPage(path){
  }
  const solution=solutions.find(item=>item.slug===slug);
  if(page==='solutions'&&solution){
-  return `<section class="section wrap enterprise-solution"><div><div class="intro"><div class="eyebrow">Replaice solutions</div><h1>${solutionHeadline(solution.slug)}</h1><p>${solution.summary}</p></div><h2>What you can do</h2><ul>${solution.examples.map(item=>`<li>${item}</li>`).join('')}</ul><h2>Related platforms</h2><ul>${solution.platforms.map(name=>`<li><a class="link" href="/#${productId([name])}">${name} ↗</a></li>`).join('')}</ul><div class="actions">${link('/contact/','Talk to Our AI Team')}</div></div>${renderSolutionVisual(solution.slug)}</section>${renderSolutionValue(solution.slug)}${solution.slug==='construction-ai'?renderConstructionLifecycle()+renderConstructionCase():''}`;
+  return `<section class="section wrap enterprise-solution"><div><div class="intro"><div class="eyebrow">Replaice solutions</div><h1>${solutionHeadline(solution.slug)}</h1><p>${solution.summary}</p></div><h2 id="implementation">What you can do</h2><ul>${solution.examples.map(item=>`<li>${item}</li>`).join('')}</ul>${solution.slug==='construction-ai'?'<p><a class="link" href="https://biltflow.com/" target="_blank" rel="noopener noreferrer">Explore BiltFlow ↗</a></p>':`<h2>Related platforms</h2><ul>${solution.platforms.map(name=>`<li><a class="link" href="/#${productId([name])}">${name} ↗</a></li>`).join('')}</ul>`}<div class="actions">${link('/contact/','Talk to Our AI Team')}</div></div>${renderSolutionVisual(solution.slug)}</section>${renderSolutionValue(solution.slug)}${solution.slug==='construction-ai'?renderConstructionLifecycle()+renderConstructionCase():''}`;
  }
  return home();
 }
@@ -71,31 +70,66 @@ if(typeof document!=='undefined'){
 const page=location.pathname.split('/')[1];
 const main=document.querySelector('main');
 if(!main.firstElementChild)main.innerHTML=renderPage(location.pathname);
-if(!page){mountHeroArchitecture();mountHeroCity();}
+
 mountCare();
 void import("./assistant.js");
-document.querySelector('#platform-menu').innerHTML=products.map(p=>`<a href="${p[0]==='ReplaiceCare'?carePath:'/#'+productId(p)}">${p[0]}</a>`).join('');
+mountEdition();
+const cookieNoticeKey='replaice-cookie-notice';
+let cookiesAccepted=false;
+try{cookiesAccepted=localStorage.getItem(cookieNoticeKey)==='accepted';}catch{}
+let cookieNoticeDismissed=false;
+try{cookieNoticeDismissed=sessionStorage.getItem(cookieNoticeKey)==='dismissed';}catch{}
+if(!cookiesAccepted&&!cookieNoticeDismissed){
+ const notice=document.createElement('aside');
+ notice.className='cookie-notice';
+ notice.setAttribute('aria-label','Cookie notice');
+ notice.innerHTML='<p>We use essential cookies and browser storage to support site features and remember your preferences. <a href="/privacy/">Privacy Policy</a></p><button type="button" class="button">Accept</button><button type="button" class="cookie-notice-close" aria-label="Close cookie notice">×</button>';
+ notice.querySelector('button').onclick=()=>{
+  try{localStorage.setItem(cookieNoticeKey,'accepted');}catch{}
+  notice.remove();
+ };
+ notice.querySelector('.cookie-notice-close').onclick=()=>{
+  try{sessionStorage.setItem(cookieNoticeKey,'dismissed');}catch{}
+  notice.remove();
+ };
+ document.body.append(notice);
+}
+mountConstructionCarousel();
+mountEditorialStack(main);
+mountHeroCity();
+mountHeroArchitecture();
+if(page==='contact'){
+ const interest=document.querySelector('[name="Product interest"]');
+ const requested=new URLSearchParams(location.search).get('product');
+ if(interest&&products.some(([name])=>name===requested)){
+  if(interest instanceof HTMLSelectElement&&!Array.from(interest.options).some(option=>option.value===requested))interest.add(new Option(requested,requested));
+  interest.value=requested;
+ }
+}
 const menu=document.querySelector('#menu'),navigation=document.querySelector('#navigation');
-function closeNav(){navigation.classList.remove('open');menu.setAttribute('aria-expanded','false');navigation.querySelectorAll('details').forEach(d=>d.open=false);}
-menu.onclick=()=>menu.setAttribute('aria-expanded',String(navigation.classList.toggle('open')));
+const navDetails=[...navigation.querySelectorAll('details')];
+function closeNav(){navigation.classList.remove('open');document.body.classList.remove('ed-menu-open');menu.setAttribute('aria-expanded','false');menu.textContent='Menu';navDetails.forEach(d=>d.open=false);}
+menu.onclick=()=>{if(navigation.classList.contains('open'))return closeNav();navigation.classList.add('open');document.body.classList.add('ed-menu-open');menu.setAttribute('aria-expanded','true');menu.textContent='Close';};
+navDetails.forEach(d=>d.addEventListener('toggle',()=>{if(d.open)navDetails.forEach(other=>{if(other!==d)other.open=false;});}));
 navigation.addEventListener('click',e=>{if(e.target.closest('a'))closeNav();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){const open=navigation.querySelector('details[open] summary');const mobile=navigation.classList.contains('open');closeNav();if(mobile)menu.focus();else open?.focus();}});
+document.addEventListener('keydown',e=>{
+ const mobile=navigation.classList.contains('open');
+ if(e.key==='Escape'){const open=navigation.querySelector('details[open] summary');if(mobile){closeNav();menu.focus();}else if(open){open.parentElement.open=false;open.focus();}}
+ if(e.key==='Tab'&&mobile){const items=[menu,...[...navigation.querySelectorAll('a,summary')].filter(el=>el.getClientRects().length)];const edge=e.shiftKey?items[0]:items.at(-1);if(edge===document.activeElement){e.preventDefault();(e.shiftKey?items.at(-1):items[0]).focus();}}
+});
 document.addEventListener('click',e=>{if(!e.target.closest('nav'))closeNav();});
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 document.querySelectorAll('[data-hybrid-flow]').forEach(flow=>{
- const button=flow.querySelector('button');
  const images=[...flow.querySelectorAll('img')].map(img=>({img,still:img.getAttribute('src')}));
- let playing=!reduced.matches,visible=false;
+ let visible=!('IntersectionObserver' in window);
  function sync(){
-  button.textContent=playing?'Pause animation':'Play animation';
   images.forEach(({img,still})=>{
-   const source=playing&&visible&&!document.hidden?img.dataset.loop:still;
+   const source=!reduced.matches&&visible&&!document.hidden?img.dataset.loop:still;
    if(img.getAttribute('src')!==source)img.src=source;
   });
  }
- button.onclick=()=>{playing=!playing;sync();};
- new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;sync();}).observe(flow);
- reduced.addEventListener('change',()=>{playing=!reduced.matches;sync();});
+ if (!visible) new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;sync();}).observe(flow);
+ reduced.addEventListener('change',sync);
  document.addEventListener('visibilitychange',sync);
  sync();
 });

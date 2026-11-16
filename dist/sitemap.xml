@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://replaice.ai/platforms/desk/</loc></url>
+  <url><loc>https://replaice.ai/platforms/biltflow/</loc></url>
+  <url><loc>https://replaice.ai/platforms/northstar/</loc></url>
+  <url><loc>https://replaice.ai/platforms/hybridrag-agent/</loc></url>
+  <url><loc>https://replaice.ai/platforms/replaice-desk/</loc></url>
+  <url><loc>https://replaice.ai/platforms/janavy/</loc></url>
+  <url><loc>https://replaice.ai/platforms/engage/</loc></url>
+  <url><loc>https://replaice.ai/platforms/replaicecare/</loc></url>
   <url><loc>https://replaice.ai/platform/replaicecare/</loc></url>
   <url><loc>https://replaice.ai/</loc></url>
   <url><loc>https://replaice.ai/contact/</loc></url>

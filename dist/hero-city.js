@@ -20,16 +20,19 @@ export function mountHeroCity(){
    renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
    mount.append(renderer.domElement);
    const scene=new T.Scene();
-   scene.background=new T.Color(0x07162d);
-   scene.fog=new T.FogExp2(0x07162d,.032);
+   scene.background=new T.Color(0x040e24);
+   scene.fog=new T.FogExp2(0x040e24,.019);
    const camera=new T.PerspectiveCamera(41,1,.2,150);
    const city=new T.Group();
    scene.add(city);
-   scene.add(new T.HemisphereLight(0x8bd7ff,0x061021,2.2));
-   const key=new T.DirectionalLight(0x569eff,2.3);
+   scene.add(new T.HemisphereLight(0x9bd0ff,0x0e2856,2.0));
+   const key=new T.DirectionalLight(0x6fa8ff,2.3);
    key.position.set(8,12,6);
    scene.add(key);
-   const ground=new T.GridHelper(85,85,0x224f7e,0x143250);
+   const rim=new T.DirectionalLight(0x6fa8ff,2.4);
+   rim.position.set(-8,9,-12);
+   scene.add(rim);
+   const ground=new T.GridHelper(85,85,0x345b98,0x142e59);
    city.add(ground);
    const box=new T.BoxGeometry(1,1,1);
    const buildings=new T.InstancedMesh(box,new T.MeshStandardMaterial({color:0xffffff,roughness:.72,metalness:.16}),195);
@@ -44,7 +47,7 @@ export function mountHeroCity(){
     dummy.scale.set(width,height,depth);
     dummy.updateMatrix();
     buildings.setMatrixAt(count,dummy.matrix);
-    buildings.setColorAt(count++,new T.Color().setHSL(.58+random()*.037,.52,.12+random()*.1));
+    buildings.setColorAt(count++,new T.Color().setHSL(.58+random()*.037,.56,.23+random()*.15));
     for(let i=1;i<=3;i++){
      dummy.position.set(x,height*i/4,z+depth/2+.011);
      dummy.scale.set(width*.66,.022,.018);
@@ -60,7 +63,7 @@ export function mountHeroCity(){
    let frame=0;
    draw=time=>{
     camera.position.set(11+Math.sin(time*.18)*2,12.6,22);
-    camera.lookAt(-3.2,1.2,-2);
+    camera.lookAt(-5.8,1.8,-2);
     for(let i=0;i<traffic.count;i++){
      const position=((i*2.7+time*(2+i%3))%44)-22;
      dummy.position.set(i%2?position:(i%5-2)*4+.98,.055,i%2?(i%5-2)*4+.98:position);

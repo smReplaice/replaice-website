@@ -14,6 +14,17 @@ widget.innerHTML=`<div class="assistant-nudge" hidden><span data-hint></span><bu
 document.body.append(widget);
 const panel=widget.querySelector('section'),launch=widget.querySelector('.assistant-launch'),nudge=widget.querySelector('.assistant-nudge'),start=widget.querySelector('[data-start]'),status=widget.querySelector('[data-status]');
 let active,revision=0;
+const usageKey='replaice-raj-used';
+const followup=widget.querySelector('.assistant-book');
+let used=false;
+try{used=sessionStorage.getItem(usageKey)==='1';}catch{}
+function finish(focus=false){
+ start.hidden=true;
+ question.hidden=true;
+ status.textContent='Thanks for talking with Raj. For more details, our consulting team can help you with the next step.';
+ followup.textContent='Talk to our consulting team';
+ if(focus&&!panel.hidden)followup.focus();
+}
 const question=widget.querySelector('.assistant-input');
 const composer=question.querySelector('input'),sendQuestion=question.querySelector('button');
 composer.addEventListener('input',()=>{sendQuestion.disabled=!composer.value.trim();});
@@ -79,15 +90,16 @@ function toggle(open){
  widget.classList.toggle("assistant-expanded",open);
  nudge.hidden=true;
  launch.setAttribute('aria-expanded',String(open));
- if(open){dismiss();start.focus();}
- else{stop();launch.focus();}
+ if(open){dismiss();if(used&&!active)finish(true);else start.focus();}
+ else{stop();if(used)finish();launch.focus();}
 }
 launch.onclick=()=>toggle(panel.hidden);
 widget.querySelector('[data-minimize]').onclick=()=>{panel.hidden=true;widget.classList.remove("assistant-expanded");launch.setAttribute('aria-expanded','false');launch.focus();};
 widget.querySelector('[data-close]').onclick=()=>toggle(false);
 widget.addEventListener('keydown',event=>{if(event.key==='Escape'&&!panel.hidden)toggle(false);});
 start.onclick=async()=>{
- if(active){stop();status.textContent='Voice chat ended.';return;}
+ if(active){stop();finish(true);return;}
+ if(used){finish(true);return;}
  const attempt=++revision;
  start.disabled=true;
  start.textContent='Connecting…';
@@ -96,14 +108,16 @@ start.onclick=async()=>{
   const {connectAssistant}=await import('./assistant-voice.js');
   if(attempt!==revision)return;
   const end=await connectAssistant(widget,()=>attempt===revision,message=>{
-   if(attempt===revision){stop();status.textContent=message;}
+   if(attempt===revision){stop();if(used)finish(true);else status.textContent=message;}
   });
   if(attempt!==revision){end();return;}
   active=end;
+  used=true;
+  try{sessionStorage.setItem(usageKey,'1');}catch{}
   panel.classList.add("assistant-live");
   start.textContent='End voice chat';
   status.textContent='Listening. Ask about Replaice.';
- }catch(error){if(attempt===revision)status.textContent=error.message||'Unable to start voice chat.';}
+ }catch(error){if(attempt===revision){if(error.sessionUsed){used=true;try{sessionStorage.setItem(usageKey,'1');}catch{}finish(true);}else status.textContent=error.message||'Unable to start voice chat.';}}
  finally{if(attempt===revision){start.disabled=false;if(!active)start.textContent='Speak now';}}
 };
-window.addEventListener('pagehide',stop);
+window.addEventListener('pagehide',()=>{stop();if(used)finish();});

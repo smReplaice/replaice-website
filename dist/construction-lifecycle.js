@@ -8,12 +8,15 @@ const stages=[
 ];
 const icon=path=>`<svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${path}"/></svg>`;
 
-export function renderConstructionLifecycle(){
- return `<section class="construction-lifecycle" aria-labelledby="lifecycle-title">
+export function renderConstructionLifecycle(className='',walkthrough=''){
+ return `<section class="construction-lifecycle ${className}" aria-labelledby="lifecycle-title">
  <div class="eyebrow">BiltFlow lifecycle</div>
  <h2 id="lifecycle-title">From site feasibility to subcontractor payment.</h2>
  <p class="lifecycle-intro">Follow the project records that connect planning, design coordination, procurement and delivery.</p>
+${walkthrough}
+${walkthrough?'<details class="lifecycle-details"><summary>See module handoffs and payment records</summary>':''}
  <ol class="lifecycle-stages">${stages.map(([module,title,body,handoff,path],i)=>`<li><div class="lifecycle-marker"><span>${String(i+1).padStart(2,'0')}</span>${icon(path)}</div><div class="lifecycle-module mono">${module}</div><h3>${title}</h3><p>${body}</p><p class="lifecycle-handoff"><strong>${i===stages.length-1?'Payment record':'Handoff'}</strong><span>${handoff}</span></p></li>`).join('')}</ol>
  <aside class="lifecycle-resources"><div>${icon('M4 20V10m5 10V6m5 14v-7m5 7V4M3 20h18')}<div class="mono">ResourceFlow</div><h3>Plan capacity throughout delivery</h3></div><div><p>Use Pulse phases and dates to forecast demand by role and skill. Allocate people across projects, track utilisation and adjust assignments when dates or workloads change.</p><p class="lifecycle-feedback"><strong>Delivery feedback</strong> When drawings, lead times or milestones change, review the affected quantities, procurement packages and resource allocations.</p></div></aside>
+${walkthrough?'</details>':''}
  </section>`;
 }

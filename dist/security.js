@@ -17,7 +17,7 @@ export function renderSecurity(){
   <ul class="security-controls">${controls.map(([title,body,path])=>`<li>${icon(path)}<div><h3>${title}</h3><p>${body}</p></div></li>`).join('')}</ul>
   <div class="security-story"><div class="eyebrow">Enterprise security</div><h2 id="security-title">Keep enterprise AI <em>under control.</em></h2><p>Give AI agents the access they need, define when a person must approve an action, and keep a record of what happened.</p><div class="actions"><a class="button" href="/contact/">Discuss security requirements ↗</a></div></div>
  </div>
- <div class="security-assurance"><h3>Standards for your security review</h3><p>Discuss applicable requirements and available assurance documentation for your deployment.</p>
+ <div class="security-assurance"><h3>Standards and regulations for your security review</h3><p>These references describe review topics. Ask our team for verified assurance documentation and deployment-specific requirements.</p>
  <ul>${frameworks.map(([name,detail,path])=>`<li>${icon(path)}<strong>${name}</strong><span>${detail}</span></li>`).join('')}</ul></div>
  </div></section>`;
 }

@@ -13,13 +13,13 @@ Official website: https://replaice.ai/
 
 ## Platforms
 
-- [BiltFlow](https://replaice.ai/#biltflow): Construction & compliance OS. Connect feasibility, drawings and takeoff with procurement, project delivery, claims and reporting.
-- [NorthStar](https://replaice.ai/#northstar): Physical AI & robotics. Use drones, robotics and visual AI to inspect physical sites and connect observations to project records.
-- [HybridRAG Agent](https://replaice.ai/#hybridrag-agent): Enterprise knowledge intelligence. Turn documents, data and institutional knowledge into grounded context for enterprise AI.
-- [Replaice Desk](https://replaice.ai/#replaice-desk): Autonomous IT & customer support. Handle Level 1 support and assist Level 2 teams across voice, messaging, email and web.
-- [Janavy](https://replaice.ai/#janavy): Secure document intelligence. Share sensitive files and manage agreement workflows with controlled access and audit visibility.
-- [Engage](https://replaice.ai/#engage): Agentic omnichannel engagement. Personalize outreach across email, WhatsApp, SMS, voice and digital channels.
-- [ReplaiceCare](https://replaice.ai/platform/replaicecare): Agentic AI for Healthcare. ReplaiceCare unifies fragmented clinical, operational, and administrative systems through specialized AI agents. It connects healthcare data, coordinates multistep workflows, and helps providers and health plans reduce administrative burden while preserving human oversight.
+- [BiltFlow](https://replaice.ai/platforms/biltflow/): Construction & compliance OS. Connect feasibility, drawings and takeoff with procurement, project delivery, claims and reporting.
+- [NorthStar](https://replaice.ai/platforms/northstar/): Physical AI & robotics. Use drones, robotics and visual AI to inspect physical sites and connect observations to project records.
+- [HybridRAG Agent](https://replaice.ai/platforms/hybridrag-agent/): Enterprise knowledge intelligence. Turn documents, data and institutional knowledge into grounded context for enterprise AI.
+- [Replaice Desk](https://replaice.ai/platforms/replaice-desk/): Autonomous IT & customer support. Handle Level 1 support and assist Level 2 teams across voice, messaging, email and web.
+- [Janavy](https://replaice.ai/platforms/janavy/): Secure document intelligence. Share sensitive files and manage agreement workflows with controlled access and audit visibility.
+- [Engage](https://replaice.ai/platforms/engage/): Agentic omnichannel engagement. Personalize outreach across email, WhatsApp, SMS, voice and digital channels.
+- [ReplaiceCare](https://replaice.ai/platforms/replaicecare/): Agentic AI for Healthcare. ReplaiceCare unifies fragmented clinical, operational, and administrative systems through specialized AI agents. It connects healthcare data, coordinates multistep workflows, and helps providers and health plans reduce administrative burden while preserving human oversight.
 
 ## Contact
 

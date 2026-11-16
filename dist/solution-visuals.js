@@ -1,3 +1,4 @@
+import {biltflowScreens} from './biltflow-demo.js';
 const stories={
  'enterprise-ai':{
   headline:'Put your enterprise knowledge to work.',
@@ -11,13 +12,7 @@ const stories={
  },
  'construction-ai':{
   headline:'See what a project change affects before it reaches site.',
-  title:'Drawing revision impact',
-  drawing:true,
-  steps:[
-   ['Quantity','Partition length increases by 12 m.','BOQ Engine · Level 03 partitions'],
-   ['Package','Update the drywall package scope for review.','ProcureFlow · Tender package PKG-07'],
-   ['Milestone','Check whether the additional work affects the fit-out start.','Pulse · Level 03 fit-out']
-  ]
+
  },
  'agentic-ai':{
   headline:'Give AI a task, the tools to do it, and clear limits.',
@@ -42,10 +37,34 @@ const stories={
 };
 export const solutionHeadline=slug=>stories[slug].headline;
 export function renderSolutionVisual(slug){
+ if(slug==='construction-ai')return `<div class="construction-carousel" aria-label="BiltFlow product screenshots">${biltflowScreens.map(([module,title,,screen,alt],i)=>`<figure aria-hidden="${i!==0}"><img src="/media/biltflow-${screen}.png" alt="${alt}" decoding="async"><figcaption><strong>${screen==='pulse'?'Pulse':module}</strong><span>${title}.</span></figcaption></figure>`).join('')}</div>`;
  const story=stories[slug];
  return `<figure class="solution-workflow">
  <figcaption><span class="mono">Illustrative workflow</span><strong>${story.title}</strong></figcaption>
-${story.drawing?`<div class="revision-preview"><svg viewBox="0 0 210 88" aria-hidden="true"><path d="M10 10h190v68H10z M64 10v68m63-68v68m-63-35h63m0 13h73" fill="none" stroke="#85a9cd" stroke-width="2"/><rect x="65" y="30" width="61" height="26" fill="#48e4db30" stroke="#82f8ea" stroke-dasharray="4 3"/></svg><span><strong>Level 03 drawing</strong><small>Rev B → Rev C · Partition change</small></span></div>`:''}
+
  <ol>${story.steps.map(([phase,event,detail])=>`<li><span class="mono">${phase}</span><strong>${event}</strong><small>${detail}</small></li>`).join('')}</ol>
  </figure>`;
+}
+
+export function mountConstructionCarousel(){
+ const carousel=document.querySelector('.construction-carousel');
+ if(!carousel)return;
+ const slides=[...carousel.querySelectorAll('figure')];
+ const motion=matchMedia('(prefers-reduced-motion: reduce)');
+ let active=0,timer,visible=!('IntersectionObserver' in window);
+ function sync(){
+  clearInterval(timer);
+  if(!visible||document.hidden||motion.matches)return;
+  timer=setInterval(()=>{
+   const next=(active+1)%slides.length;
+   if(!slides[next].querySelector('img').naturalWidth)return;
+   slides[active].setAttribute('aria-hidden','true');
+   slides[next].setAttribute('aria-hidden','false');
+   active=next;
+  },3000);
+ }
+ if(!visible)new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;sync();}).observe(carousel);
+ motion.addEventListener('change',sync);
+ document.addEventListener('visibilitychange',sync);
+ sync();
 }

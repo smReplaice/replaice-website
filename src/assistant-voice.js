@@ -1,11 +1,12 @@
 import {SimliClient,LogLevel} from 'simli-client';
 
 export async function connectAssistant(widget,isCurrent,onEnd){
- let avatar,stream,context,socket,node,closed=false,timeout;
+ let avatar,stream,context,socket,node,closed=false,timeout,cleanupDeadline;
  const end=()=>{
   if(closed)return;
   closed=true;
   clearTimeout(timeout);
+  cleanupDeadline?.();
   node?.disconnect();
   stream?.getTracks().forEach(track=>track.stop());
   if(context)void context.close().catch(()=>{});
@@ -17,13 +18,8 @@ export async function connectAssistant(widget,isCurrent,onEnd){
   const resumed=context.resume();
   void resumed.catch(()=>{});
   const response=await fetch('/api/assistant/session',{method:'POST'});
-  if(!response.headers.get('Content-Type')?.includes('application/json')){
-   throw new Error('The voice backend is not running. Start the website with npm run dev, then open http://localhost:8080.');
-  }
-  let config;
-  try{config=await response.json();}
-  catch{throw new Error('The voice backend returned an invalid response. Please restart it and try again.');}
-  if(!response.ok)throw new Error(config.message||'Unable to start voice chat.');
+  const config=await response.json();
+  if(!response.ok){const error=new Error(config.message||'Unable to start voice chat.');error.sessionUsed=config.sessionUsed===true;throw error;}
   if(!isCurrent())throw new Error('Session cancelled.');
   stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true},video:false});
   if(!isCurrent())throw new Error('Session cancelled.');
@@ -70,7 +66,11 @@ export async function connectAssistant(widget,isCurrent,onEnd){
     }catch{if(ready)onEnd('Audio playback was interrupted. Please reconnect.');else reject(new Error('Unable to initialize audio.'));}
    };
   });
-  timeout=setTimeout(()=>onEnd('Voice session ended. You can start another chat.'),600000);
+  const deadline=Date.now()+120000;
+  const expire=()=>{if(Date.now()>=deadline){end();onEnd('Voice session ended.');}};
+  timeout=setTimeout(expire,120000);
+  document.addEventListener('visibilitychange',expire);
+  cleanupDeadline=()=>document.removeEventListener('visibilitychange',expire);
   end.sendText=text=>send({type:'user_message',text});
   return end;
  }catch(error){end();throw error;}
