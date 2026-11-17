@@ -1,4 +1,5 @@
 const value={
+ 'implementation-services': [['Define success before building','Agree a baseline and acceptance criteria with the people who own the workflow.'],['Validate with a pilot','Test familiar requests and exceptions with a small group before expanding access.'],['Prepare for rollout','Assign ownership for training, monitoring and support.']],
  'enterprise-ai':[
   ['Choose a workflow with measurable value','Map the current process, establish a baseline for turnaround time or manual effort, and select a use case with a clear owner and success measure.'],
   ['Make enterprise knowledge usable','Connect approved documents, data and applications. HybridRAG Agent retrieves relevant context so teams can check the sources behind an answer.'],

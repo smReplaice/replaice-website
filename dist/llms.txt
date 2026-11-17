@@ -6,6 +6,7 @@ Official website: https://replaice.ai/
 
 ## Solutions
 
+- [AI implementation services](https://replaice.ai/solutions/implementation-services/): Work with Replaice to design, pilot and roll out an AI workflow with clear ownership and measurable acceptance criteria.
 - [Enterprise AI platforms and implementation services](https://replaice.ai/solutions/enterprise-ai/): Replaice helps enterprises select AI use cases, connect business data and applications, and deploy governed agentic workflows.
 - [AI platform for construction operations](https://replaice.ai/solutions/construction-ai/): BiltFlow is Replaice’s construction AI platform for feasibility, drawing review, quantity takeoff, procurement, project scheduling, claims and reporting.
 - [Agentic AI solutions and implementation](https://replaice.ai/solutions/agentic-ai/): Replaice designs agentic AI workflows that use enterprise knowledge, coordinate tasks across applications and take authorized actions with human oversight.

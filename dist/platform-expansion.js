@@ -19,7 +19,7 @@ export function platformExpansion(products,visual){
   return `<article class="platform-fold" id="${id}" style="--tile:${colors[i]};--tile-ink:${[2,3,5].includes(i)?'#0a0f1f':'white'}">
     <button type="button" class="platform-toggle" aria-expanded="false" aria-controls="fold-${id}"><span class="edition-label">${String(i+1).padStart(2,'0')}</span><strong>${name}</strong><span class="edition-label">${tags[i]}</span><span class="platform-teaser">${p[2]}</span></button>
     <div class="platform-detail" id="fold-${id}" hidden><button type="button" class="platform-close" aria-label="Close ${name}">×</button>
-    <div class="platform-detail-grid"><div><p class="edition-label">${p[1]}</p><h3 tabindex="-1">${name}</h3><p class="platform-tagline">${p[2]}</p><p>${p[3]}</p>${name==='BiltFlow'?'':`<ul>${p[4].slice(0,3).map(x=>`<li>${x}</li>`).join('')}</ul>`}<div class="actions"><a class="button" href="${external?p[5]:'/platforms/'+id+'/'}" ${external?'target="_blank" rel="noopener noreferrer"':''}>${external?'Visit '+name+' website ↗':'Explore '+name+' →'}</a><a class="button outline" href="/contact/?product=${encodeURIComponent(name)}">Book a demo →</a></div></div>${visual(p)}</div>
+    <div class="platform-detail-grid"><div><p class="edition-label">${p[1]}</p><h3 tabindex="-1">${name}</h3><p class="platform-tagline">${p[2]}</p><p>${p[3]}</p>${name==='BiltFlow'?'':`<ul>${p[4].slice(0,3).map(x=>`<li>${x}</li>`).join('')}</ul>`}<div class="actions"><a class="button" href="${external?p[5]:'/platforms/'+id+'/'}" ${external?'target="_blank" rel="noopener noreferrer"':''}>${external?'Visit '+name+' website ↗':'Explore '+name+' →'}</a>${external?`<a class="button outline" href="/platforms/${id}/">Explore ${name} →</a>`:''}<a class="button outline" href="/contact/?product=${encodeURIComponent(name)}">Book a demo →</a></div></div>${visual(p)}</div>
     <p class="edition-label">How it works</p>${name==='BiltFlow'?`<h4 class="platform-lifecycle-title">One connected construction lifecycle.</h4><ol class="platform-flow platform-lifecycle">${biltflowLifecycle.map(([module,copy])=>`<li><strong>${module}</strong> — ${copy}</li>`).join('')}</ol>`:`<ol class="platform-flow">${(p[6]||careSteps).map(step=>`<li>${step}</li>`).join('')}</ol>`}</div></article>`;
  }).join('')}</div>`;
 }
@@ -63,6 +63,14 @@ export function mountPlatformExpansion(){
   });
  });
  group.addEventListener('keydown',e=>{if(e.key==='Escape'&&active){e.preventDefault();choose(active);}});
+ document.querySelectorAll('[data-platform-menu-link]').forEach(link=>{
+  link.addEventListener('click',event=>{
+   if(event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+   if(link.pathname===location.pathname&&link.hash===location.hash&&active){
+    requestAnimationFrame(()=>show(active,true));
+   }
+  });
+ });
  addEventListener('hashchange',sync);
  addEventListener('popstate',sync);
  sync();

@@ -34,6 +34,17 @@ const stories={
    ['Context attached','The specialist receives the request, checks performed, and escalation reason.','D-105 · Ready for review']
   ]
  }
+,
+ 'implementation-services': {
+  headline:'Take one workflow from pilot to production.',
+  title:'From workflow selection to rollout',
+  steps:[
+   ['Scope','Agree what the pilot should improve.','Workflow owner and baseline'],
+   ['Integrate','Connect the approved data and systems.','Access, permissions and review steps'],
+   ['Pilot','Test routine cases and exceptions with a small group.','Quality and turnaround checks'],
+   ['Roll out','Review results and plan the handover.','Training, monitoring and support']
+  ]
+ }
 };
 export const solutionHeadline=slug=>stories[slug].headline;
 export function renderSolutionVisual(slug){

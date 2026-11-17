@@ -1,6 +1,6 @@
 const widget=document.createElement('aside');
 widget.className='site-assistant';
-const portrait='<img class="assistant-portrait" src="/media/raj-avatar.jpg" alt="" width="45" height="45">';
+const portrait='<img class="assistant-portrait" src="/media/raj-portrait.png" alt="" width="45" height="45">';
 widget.innerHTML=`<div class="assistant-nudge" hidden><span data-hint></span><button type="button" data-ask>Ask Raj</button><button type="button" data-dismiss aria-label="Dismiss suggestion">×</button></div>
 <button type="button" class="button assistant-launch" aria-expanded="false" aria-controls="assistant-panel">${portrait}<span class="assistant-sparkle" aria-hidden="true">✦</span><strong>Ask Raj</strong></button>
 <section id="assistant-panel" class="assistant-panel" hidden aria-label="Replaice AI assistant">
